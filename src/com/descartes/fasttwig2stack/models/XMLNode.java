@@ -12,40 +12,44 @@ import java.util.List;
 public class XMLNode {
 	
 	private int leftPos;
-    private int rigthPos;
+    private int rightPos;
     private int level;
-    private String tag;
+    private String label;
     private String value;
+    private XMLNode parent;
     private List<XMLNode> childs;
     private XMLNode[] partialSolutions;
     
     public XMLNode(String tag) {
         this.leftPos = 0;
-        this.rigthPos = 0;
+        this.rightPos = 0;
         this.level = 0;
-        this.tag = tag;
+        this.label = tag;
         this.value = "";
         this.childs = null;
+        this.parent = null;
     }
 
     public XMLNode() {
         this.leftPos = 0;
-        this.rigthPos = 0;
+        this.rightPos = 0;
         this.level = 0;
-        this.tag = "";
+        this.label = "";
         this.value = "";
         this.childs = null;
+        this.parent = null;
     }
     
     public static XMLNode newDocElement(XMLNode elt, XMLNode[] partialSolutions) {
     	XMLNode newDocElement = new XMLNode();
     	newDocElement.leftPos = elt.leftPos;
-    	newDocElement.rigthPos = elt.rigthPos;
+    	newDocElement.rightPos = elt.rightPos;
     	newDocElement.level = elt.leftPos;
-    	newDocElement.tag = elt.tag;
+    	newDocElement.label = elt.label;
     	newDocElement.value = elt.value;
     	newDocElement.partialSolutions = partialSolutions;
     	newDocElement.childs = elt.childs;
+    	newDocElement.parent = elt.parent;
     	
     	return newDocElement;
     }
@@ -59,11 +63,11 @@ public class XMLNode {
 	}
 
 	public int getRigthPos() {
-		return rigthPos;
+		return rightPos;
 	}
 
-	public void setRigthPos(int rigthPos) {
-		this.rigthPos = rigthPos;
+	public void setRightPos(int rightPos) {
+		this.rightPos = rightPos;
 	}
 
 	public int getLevel() {
@@ -74,12 +78,12 @@ public class XMLNode {
 		this.level = level;
 	}
 
-	public String getTag() {
-		return tag;
+	public String getLabel() {
+		return label;
 	}
 
-	public void setTag(String tag) {
-		this.tag = tag;
+	public void setLabel(String label) {
+		this.label = label;
 	}
 
 	public String getValue() {
@@ -105,14 +109,33 @@ public class XMLNode {
 	public void setChilds(List<XMLNode> childs) {
 		this.childs = childs;
 	}
+	
+	
+	
+	public XMLNode getParent() {
+		return parent;
+	}
+
+	public void setParent(XMLNode parent) {
+		this.parent = parent;
+	}
+
+	public XMLNode addChild(XMLNode xmlnode) {
+		List<XMLNode> childs = this.childs;
+		childs.add(xmlnode);
+		this.setChilds(childs);
+		return xmlnode;
+	}
+
+//	@Override
+//	public String toString() {
+//		return "XMLNode: \n parent=" + parent +" \n leftPos=" + leftPos + " \n rigthPos=" + rigthPos + " \n level=" + level + " \n label=" + label + ", value=" + value ;
+//	}
 
 	@Override
 	public String toString() {
-		return "XMLNode [leftPos=" + leftPos + ", rigthPos=" + rigthPos + ", level=" + level + ", tag=" + tag
-				+ ", value=" + value + ", childs=" + childs + ", partialSolutions=" + Arrays.toString(partialSolutions)
-				+ "]";
+		return "\n label: " + label + ", level: " + level + ", left: " + leftPos + ", right:, " + rightPos + " \n";
 	}
-
 	
 
 }
